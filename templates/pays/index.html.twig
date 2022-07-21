@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1 class="text-center my-3">Liste des pays participants</h1>
+
+	<table class="table-striped table-hover table">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Nom</th>
+				<th>Drapeau</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for p in paysList %}
+				<tr>
+					<td>{{ p.id }}</td>
+					<td>{{ p.nom }}</td>
+					<td><img src="{{ asset('assets/img/upload/flags/' ~ p.drapeau) }}" alt="{{ p.nom }}" width="50px"></td>
+					<td>
+						<a href="{{ path('update_pays', {id: p.id}) }}">
+							<button class="btn btn-warning">Modifier</button>
+						</a>
+						<a href="{{ path('delete_pays', {id: p.id}) }}">
+							<button class="btn btn-danger" onclick="alert('Etes-vous sûr de vouloir supprimer le pays {{ p.nom }}')">Supprimer</button>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+                <tr>
+                    <td colspan="4">Il n'y a pas de pays d'inscrit</td>
+                </tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="4">
+					{% include "pays/_form.html.twig" %}
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+{% endblock %}

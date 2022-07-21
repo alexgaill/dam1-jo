@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center">Liste des disciplines</h1>
+
+    <table class="table table-striped table-hover table-info">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Nb participants</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for discipline in disciplines %}
+                <tr>
+                    <td>{{ discipline.id }}</td>
+                    <td>{{ discipline.nom }}</td>
+                    <td>{{ discipline.athletes|length }}</td>
+                    <td>
+                        <a href="{{ path('update_discipline', {id: discipline.id}) }}"><button class="btn btn-warning">Modifier</button></a>
+                        <a href="{{ path('delete_discipline', {id: discipline.id}) }}"><button class="btn btn-danger" onclick="alert('Etes-vous sûr de vouloir supprimer la discipline {{ discipline.nom }}')">Supprimer</button></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune discipline n'a été validée par la conseil pour le moment.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    {% include "discipline/_form.html.twig" %}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

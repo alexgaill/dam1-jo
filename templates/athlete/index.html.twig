@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="my-3 text-center">Liste des athlètes inscrits</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Photo</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date naissance</th>
+                <th>Pays</th>
+                <th>Discipline</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for athlete in athletes %}
+                <tr>
+                    <td>{{ athlete.id }}</td>
+                    <td> <img src="{{ athlete.photo|default("https://fakeimg.pl/50x50/") }}" alt="Profil pic"></td>
+                    <td>{{ athlete.nom }}</td>
+                    <td>{{ athlete.prenom }}</td>
+                    <td>{{ athlete.dateNaissance|format_date('long', locale='fr') }}</td>
+                    <td>{{ athlete.pays.nom }} <img src="{{ asset('assets/img/upload/flags/' ~ athlete.pays.drapeau) }}" alt="{{ athlete.pays.nom }}"></td>
+                    <td>{{ athlete.discipline.nom }}</td>
+                    <td>
+						<a href="#">
+							<button class="btn btn-warning">Modifier</button>
+						</a>
+						<a href="#">
+							<button class="btn btn-danger" onclick="alert('Etes-vous sûr de vouloir supprimer cet athlete?')">Supprimer</button>
+						</a>
+					</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center">Aucun athlète</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    {{ form(form) }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
